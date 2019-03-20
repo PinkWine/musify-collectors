@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 import dev.cstv.collector.rest.RestHttpHeader;
 import dev.cstv.collector.service.SongRestService;
-import dev.cstv.musify.domain.Song;
+import dev.cstv.musify.domain.SongMessage;
 
 @Component
 public class SongRestServiceImpl implements SongRestService {
@@ -36,33 +36,33 @@ public class SongRestServiceImpl implements SongRestService {
 	@Autowired
 	RestHttpHeader restHttpHeader;
 	 
-	public Song read(Integer index) {
+	public SongMessage read(Integer index) {
 		RestTemplate restTemplate = restHttpHeader.getRestTemplate();
 		return (restTemplate
-				.exchange(baseUrlExtended + index, HttpMethod.GET, restHttpHeader.getHttpEntity(), Song.class)
+				.exchange(baseUrlExtended + index, HttpMethod.GET, restHttpHeader.getHttpEntity(), SongMessage.class)
 				.getBody());
 		// Returns Song in Body HTTP Message
 	}
 
-	public void create(Song song) {
+	public void create(SongMessage song) {
 		// TODO call webservice
 		System.out.println("calling REST: " + song.getTitle());
 		
 		RestTemplate restTemplate = restHttpHeader.getRestTemplate();
 		// HTTPEntity - SEND Headers & Body
-		HttpEntity<Song> httpEntity = new HttpEntity<Song>(song, restHttpHeader.getHttpHeaders());
-		restTemplate.postForObject(baseUrl, httpEntity, Song.class);
+		HttpEntity<SongMessage> httpEntity = new HttpEntity<SongMessage>(song, restHttpHeader.getHttpHeaders());
+		restTemplate.postForObject(baseUrl, httpEntity, SongMessage.class);
 	}
 
 	private static URI getBaseURI() {
 		return UriBuilder.fromUri(BASE_URL).build();
 	}
 
-	public List<Song> read() {
+	public List<SongMessage> read() {
 
 		RestTemplate restTemplate = restHttpHeader.getRestTemplate();
 		return Arrays.asList(
-				restTemplate.exchange(baseUrl, HttpMethod.GET, restHttpHeader.getHttpEntity(), Song[].class).getBody());
+				restTemplate.exchange(baseUrl, HttpMethod.GET, restHttpHeader.getHttpEntity(), SongMessage[].class).getBody());
 		// restHttpHeader.getHttpEntity() - get HTTP headers [Authentication; JSON
 		// ACCEPT]
 	}
