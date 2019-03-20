@@ -2,11 +2,11 @@ package dev.cstv.amqp;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
-import dev.cstv.musify.domain.Song;
+import dev.cstv.musify.domain.SongMessage;
 
 public interface SongAmqpService {
 
-	void create(Song topicTemplate);
+	void create(SongMessage topicTemplate);
  
 
 }

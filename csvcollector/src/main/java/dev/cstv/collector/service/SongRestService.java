@@ -1,11 +1,11 @@
 package dev.cstv.collector.service;
 
-import dev.cstv.musify.domain.Song;
+import dev.cstv.musify.domain.SongMessage;
 
 public interface SongRestService {
 	
-	Song read(Integer index);
+	SongMessage read(Integer index);
 	
-	void create(Song song);
+	void create(SongMessage song);
 
 }

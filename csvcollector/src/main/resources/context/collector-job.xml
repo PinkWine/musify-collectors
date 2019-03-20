@@ -30,7 +30,7 @@
 			                        name="fieldSetMapper">
 			                    <beans:bean
 			                            class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"
-			                            p:targetType= "dev.cstv.musify.domain.Song"/>
+			                            p:targetType= "dev.cstv.musify.domain.SongMessage"/>
 			                </beans:property>
 			            </beans:bean>
         </beans:property>
