@@ -10,11 +10,11 @@
             http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
- <!-- Read in the products -->
+ <!-- Read in the products p:resource="classpath:data/songs.csv-->
     <beans:bean
             id="csvFileReader"
             class="org.springframework.batch.item.file.FlatFileItemReader"
-            p:resource="classpath:data/songs.csv">
+            p:resource="data/songs.csv">
         <beans:property name="lineMapper">      
 			  <!-- DefaultLineMapper - Two-phase LineMapper implementation consisting of 
 			    1. Tokenization  - lineTokenizer[DelimitedLineTokenizer] of the line into FieldSet 
@@ -24,7 +24,7 @@
 			                    <beans:bean
 			                            class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"
 			                            p:delimiter=","
-			                            p:names="title,url"/>
+			                            p:names="year,title,url"/>
 			                </beans:property>
 			                <beans:property
 			                        name="fieldSetMapper">
@@ -38,7 +38,10 @@
 
    <beans:bean id="songWriter" class="dev.cstv.collector.batch.SongItemWriter">
 			<beans:property name="songService">
-				<beans:bean class="dev.cstv.collector.service.impl.SongServiceImpl"/>
+				<beans:bean class="dev.cstv.collector.service.impl.SongRestServiceImpl"/>
+			</beans:property> 
+			<beans:property name="songAmqpService">
+				<beans:bean class="dev.cstv.amqp.SongAmqpServiceImpl"/>
 			</beans:property>
      </beans:bean>
 
@@ -52,7 +55,14 @@
 				<tasklet>
  					<chunk commit-interval="5" writer="songWriter"  reader="csvFileReader"/>
 				</tasklet>
+				 <next on="*" to="move2archive"/> 
         </step>
+         <step id="move2archive">
+        	  <tasklet>
+        	  	<beans:bean class="dev.cstv.collector.batch.MoveFileToArchive" p:resource="data/songs.csv">
+        	  	</beans:bean>
+        	  </tasklet>
+        </step> 
      </job>
 
 </beans:beans>

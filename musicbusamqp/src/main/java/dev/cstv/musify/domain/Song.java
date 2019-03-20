@@ -4,28 +4,17 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
- 
-public class Song  implements Serializable{
 
-    private String title;
+public class Song  implements Serializable  {
+
+	private String title;
     
     private String url;
  
     private Integer duration;
-    
-    private String year;
-
     private Date releaseDate;
 
-    public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	public String getTitle() {
+    public String getTitle() {
         return title;
     }
 

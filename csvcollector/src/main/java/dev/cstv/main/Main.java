@@ -10,8 +10,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import dev.cstv.collector.batch.CSVCollectorBatch;
-import dev.cstv.collector.service.SongService;
-import dev.cstv.collector.service.impl.SongServiceImpl;
+import dev.cstv.collector.service.SongRestService;
+import dev.cstv.collector.service.impl.SongRestServiceImpl;
 
 @Component
 public class Main {
@@ -22,7 +22,8 @@ public class Main {
 	public static void main(String[] args) throws Throwable {
 
 		ApplicationContext context = new ClassPathXmlApplicationContext("context/applicationContext.xml",
-				"context/batch-config.xml", "context/collector-job.xml");
+				"context/batch-config.xml", "context/collector-job.xml", "META-INF/spring/song-app-context.xml");
+		
 		context.getBean(Main.class).mainInternal(context);
 	}
 
@@ -36,10 +37,10 @@ public class Main {
 		// ProductBatch Class
 	 	cSVCollectorBatch.startjob();
 
-		SongService  impl = applicationContext.getBean(SongService.class);
+		SongRestService  impl = applicationContext.getBean(SongRestService.class);
 		
-		System.out.println("Data Get From REST !!!");
-		System.out.println(impl.read(1).getTitle());
+	//	System.out.println("Data Get From REST !!!");
+	//	System.out.println(impl.read(1).getTitle());
 
 	}
 }
