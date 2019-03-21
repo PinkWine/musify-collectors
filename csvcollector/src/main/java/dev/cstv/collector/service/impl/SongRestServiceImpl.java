@@ -30,7 +30,7 @@ public class SongRestServiceImpl implements SongRestService {
 
 	private static String BASE_URL = "http://dummy.restapiexample.com/api/v1/";
 
-	String baseUrl = "http://localhost:8080/JerseyRestSecurity/songs";
+	String baseUrl = "http://localhost:8080/musify/songs";
 	String baseUrlExtended = baseUrl + "/";
 
 	@Autowired
