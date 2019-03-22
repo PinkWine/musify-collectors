@@ -37,20 +37,12 @@
     </beans:bean>
 
    <beans:bean id="songWriter" class="dev.cstv.collector.batch.SongItemWriter">
-			<beans:property name="songService">
-				<beans:bean class="dev.cstv.collector.service.impl.SongRestServiceImpl"/>
-			</beans:property> 
 			<beans:property name="songAmqpService">
 				<beans:bean class="dev.cstv.amqp.SongAmqpServiceImpl"/>
 			</beans:property>
      </beans:bean>
 
     <job job-repository="jobRepository" id="csvCollectorJob">
-    	<!-- TODO authenticate on REST -->
-        <!--  <step id="step1Authenticate">
-			<tasklet ref="authenticate"/>
-   			<next on="*" to="step2ETL" />
-        </step> -->
         <step id="step2ETL">
 				<tasklet>
  					<chunk commit-interval="5" writer="songWriter"  reader="csvFileReader"/>
@@ -59,7 +51,7 @@
         </step>
          <step id="move2archive">
         	  <tasklet>
-        	  	<beans:bean class="dev.cstv.collector.batch.MoveFileToArchive" p:resource="data/songs.csv">
+        	  	<beans:bean class="dev.cstv.collector.batch.MoveFileToArchive">
         	  	</beans:bean>
         	  </tasklet>
         </step> 
