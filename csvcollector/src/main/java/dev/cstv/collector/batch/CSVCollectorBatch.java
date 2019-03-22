@@ -24,8 +24,8 @@ public class CSVCollectorBatch {
 	@Autowired
 	JobLauncher jobLauncher;
 	
-	// Disabled for testing as it interrupted the restart test
-//	@Scheduled(fixedDelay= 1500, initialDelay=2000)
+	// 1AM everyday
+	@Scheduled(cron = "0 0 1 * * *")
 	public void startjob() throws  Exception {
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -38,10 +38,6 @@ public class CSVCollectorBatch {
 	    JobExecution jobExecution = jobLauncher.run(csvCollectorJob, jobParameters);
 	    BatchStatus batchStatus = jobExecution.getStatus();
 	    
-	    while (batchStatus.isRunning()) {
-	        System.out.println("Still running...");
-	        Thread.sleep(1000);
-	    }
 	    System.out.println("Exit status: " + jobExecution.getExitStatus().getExitCode());
 	}
 }

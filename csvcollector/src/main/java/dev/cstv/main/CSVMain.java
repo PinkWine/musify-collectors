@@ -10,11 +10,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import dev.cstv.collector.batch.CSVCollectorBatch;
-import dev.cstv.collector.service.SongRestService;
-import dev.cstv.collector.service.impl.SongRestServiceImpl;
 
 @Component
-public class Main {
+public class CSVMain {
 
 	@Autowired
 	CSVCollectorBatch cSVCollectorBatch;
@@ -24,7 +22,7 @@ public class Main {
 		ApplicationContext context = new ClassPathXmlApplicationContext("context/applicationContext.xml",
 				"context/batch-config.xml", "context/collector-job.xml", "META-INF/spring/song-app-context.xml");
 		
-		context.getBean(Main.class).mainInternal(context);
+		context.getBean(CSVMain.class).mainInternal(context);
 	}
 
 	private void mainInternal(ApplicationContext applicationContext) throws Exception {
@@ -36,11 +34,6 @@ public class Main {
 		// This "manual mode" ...ProductBatch will be SCHEDULED if @Scheduled is on
 		// ProductBatch Class
 	 	cSVCollectorBatch.startjob();
-
-		SongRestService  impl = applicationContext.getBean(SongRestService.class);
-		
-	//	System.out.println("Data Get From REST !!!");
-	//	System.out.println(impl.read(1).getTitle());
 
 	}
 }

@@ -21,15 +21,15 @@ import org.springframework.stereotype.Component;
 @Component(value = "moveFileToArchive")
 public class MoveFileToArchive implements Tasklet  {
 	
-	private String PATH = "./src/main/resources/data/";
+	private String PATH = "resources/";
 	private Resource resource;
-	private String filePath = "data/";
+	private String filePath = PATH + "data/";
 	private String archive = PATH + "data/archive/";
 
 	@Override
 	public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
 		System.out.println("moving file ....");
-		final File directory = readFileFromResourcesAsString("/song.csv");
+		final File directory = readFileFromResourcesAsString(filePath + "/song.csv");
  
  		directory.renameTo(new File(archive + "/song.csv"));
 		System.out.println(directory.getAbsolutePath());

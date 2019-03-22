@@ -1,11 +1,7 @@
 package dev.cstv.collector.service.impl;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.ws.rs.core.UriBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import dev.cstv.collector.rest.RestHttpHeader;
 import dev.cstv.collector.rest.SoundCloudRestHttpHeader;
 import dev.cstv.collector.service.SoundCloudRestService;
 import dev.cstv.musify.domain.SongMessage;
@@ -41,7 +36,7 @@ public class SoundCloudRestServiceImpl implements SoundCloudRestService {
 	}
 
 	public void create(SongMessage song) {
-		// TODO call webservice
+	 
 		System.out.println("calling REST: " + song.getTitle());
 		
 		RestTemplate restTemplate = soundCloudRestHttpHeader.getRestTemplate();
@@ -51,6 +46,7 @@ public class SoundCloudRestServiceImpl implements SoundCloudRestService {
 	}
 
 	public List<SongMessage> read() {
+		// get 10 items to publish into DB
 		List<SoundCloudSongJson> collection = retrieveAll().getCollection().subList(0, 10);
 		List<SongMessage> result = new ArrayList<>();
 		// take a part of data from soundcloud 
