@@ -47,11 +47,11 @@
 				<tasklet>
  					<chunk commit-interval="5" writer="songWriter"  reader="csvFileReader"/>
 				</tasklet>
-				 <next on="*" to="move2archive"/> 
+				 <next on="COMPLETED" to="move2archive"/> 
         </step>
          <step id="move2archive">
         	  <tasklet>
-        	  	<beans:bean class="dev.cstv.collector.batch.MoveFileToArchive">
+        	  	<beans:bean class="dev.cstv.collector.batch.FileMoving">
         	  	</beans:bean>
         	  </tasklet>
         </step> 
