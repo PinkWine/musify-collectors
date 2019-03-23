@@ -18,7 +18,7 @@ import dev.cstv.musify.domain.SoundCloudSongs;
 @Component
 public class SoundCloudRestServiceImpl implements SoundCloudRestService {
 
-	private static String BASE_URL = "https://api-v2.soundcloud.com/featured_tracks/front?client_id=ccneGvN2nRqzObcQIySRAOqGH61n58zg&limit=20&offset=0&linked_partitioning=1&app_version=1552999161&app_locale=en";
+	private static String BASE_URL = "https://api-v2.soundcloud.com/featured_tracks/front?client_id=ccneGvN2nRqzObcQIySRAOqGH61n58zg&limit=10&offset=0&linked_partitioning=1&app_version=1552999161&app_locale=en";
 
 	String baseUrl = BASE_URL;
 	String baseUrlExtended = baseUrl + "/";
@@ -47,7 +47,7 @@ public class SoundCloudRestServiceImpl implements SoundCloudRestService {
 
 	public List<SongMessage> read() {
 		// get 10 items to publish into DB
-		List<SoundCloudSongJson> collection = retrieveAll().getCollection().subList(0, 10);
+		List<SoundCloudSongJson> collection = retrieveAll().getCollection();
 		List<SongMessage> result = new ArrayList<>();
 		// take a part of data from soundcloud 
 		for (SoundCloudSongJson json : collection) {
